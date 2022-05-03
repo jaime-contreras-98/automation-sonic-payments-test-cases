@@ -1,0 +1,20 @@
+{
+  "name": "automation-sonic-payments-test-cases-",
+  "version": "1.0.0",
+  "description": "Automation test cases for payments at sonic environment",
+  "main": "index.js",
+  "scripts": {
+    "payments": "testcafe chrome pom/tests/payments.test.js --reporter html:tests-reports/payments-test-results.html"
+  },
+  "keywords": [
+    "QA",
+    "Testing",
+    "Automation"
+  ],
+  "author": "Jaime Contreras & Sergio Flores",
+  "license": "ISC",
+  "dependencies": {
+    "testcafe": "^1.18.6",
+    "testcafe-reporter-html": "^1.4.6"
+  }
+}
