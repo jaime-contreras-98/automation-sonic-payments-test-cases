@@ -5,9 +5,15 @@ import ProductsPage from '../pages/products-page.js';
 import SubscriptionPage from '../pages/subscription-page.js';
 import RedirectPage from '../pages/redirect-page.js';
 import StatusPage from '../pages/status-page.js';
+import {createTestRun, updateTesCaseStatus} from "../data/testrail";
+
 
 fixture("Payments test cases with Testcafe on local environment")
     .page `${URL.BASE_URL}`
+
+    .before(async t=>{
+        /*await createTestRun()*/
+    })
 
     .beforeEach(async t=>{
         await t.maximizeWindow();
@@ -19,31 +25,58 @@ fixture("Payments test cases with Testcafe on local environment")
     })
 
     .afterEach(async t=>{
-        t.wait(3000);
+        await t.wait(3000);
     });
 
     test("As a user I want to process a payment with an invalid CVC code {regression}", async t=>{
-        await SubscriptionPage.processPayment(CARDS.VALID.CARD_NUMBER,CARDS.VALID.EXP_DATE,CARDS.INVALID.WRONG_CVV);
 
-        await t.expect(SubscriptionPage.errorMessageLabel.innerText).contains(MESSAGES.ERROR.CVC_DECLINED);
+        let testStatus = 1;
+        try{
+            await SubscriptionPage.processPayment(CARDS.VALID.CARD_NUMBER,CARDS.VALID.EXP_DATE,CARDS.INVALID.WRONG_CVV);
+            await t.expect(SubscriptionPage.errorMessageLabel.innerText).contains(MESSAGES.ERROR.CVC_DECLINED);
+        } catch (e) {
+            testStatus = 5
+        }
+        
+        await updateTesCaseStatus( {"testCaseName" : "WRONG_CVC_TEST", "status": testStatus})
     });
 
     test("As a user I want to process a payment with an expired card {regression}", async t=>{
-        await SubscriptionPage.processPayment(CARDS.VALID.CARD_NUMBER,CARDS.INVALID.WRONG_EXP_DATE,CARDS.VALID.CVV);
+        
+        let testStatus = 1;
+        try{
+            await SubscriptionPage.processPayment(CARDS.VALID.CARD_NUMBER,CARDS.INVALID.WRONG_EXP_DATE,CARDS.VALID.CVV);
+            await t.expect(SubscriptionPage.errorMessageLabel.innerText).contains(MESSAGES.ERROR.EXPIRED_CARD);
+        } catch (e) {
+            testStatus = 5
+        }
 
-        await t.expect(SubscriptionPage.errorMessageLabel.innerText).contains(MESSAGES.ERROR.EXPIRED_CARD);
+        await updateTesCaseStatus( {"testCaseName" : "EXPIRED_CARD_TEST", "status": testStatus})
     });
 
     test("As a user I want to process a payment with a valid card {regression}",async t=>{
-        await SubscriptionPage.processPayment(CARDS.VALID.CARD_NUMBER,CARDS.VALID.EXP_DATE,CARDS.VALID.CVV);
-        
-        await t.expect(SubscriptionPage.statusPaymentLabel.innerText).eql(MESSAGES.SUCCESS.PAYMENT_STATUS);
+        let testStatus = 1;
+        try{
+            await SubscriptionPage.processPayment(CARDS.VALID.CARD_NUMBER,CARDS.VALID.EXP_DATE,CARDS.VALID.CVV);
+            await t.expect(SubscriptionPage.statusPaymentLabel.innerText).eql(MESSAGES.SUCCESS.PAYMENT_STATUS);
+        } catch (e) {
+            testStatus = 5
+        }
+
+        await updateTesCaseStatus({"testCaseName" : "SUCCESS_TEST", "status": testStatus})
     });
     
     test("As a user I want to process a redirect payment with a valid card {regression}",async t=>{
-        await SubscriptionPage.processPayment(CARDS.VALID.REDIRECT_CARD,CARDS.VALID.EXP_DATE,CARDS.VALID.CVV);
-        await RedirectPage.redirectPayment(CREDENTIALS.REDIRECT.USER,CREDENTIALS.REDIRECT.PASSWORD);
+        
+        let testStatus = 1;
+        try{
+            await SubscriptionPage.processPayment(CARDS.VALID.REDIRECT_CARD,CARDS.VALID.EXP_DATE,CARDS.VALID.CVV);
+            await RedirectPage.redirectPayment(CREDENTIALS.REDIRECT.USER,CREDENTIALS.REDIRECT.PASSWORD);
+            await t.expect(StatusPage.paymentStatusLabel.innerText).eql(MESSAGES.SUCCESS.PAYMENT_REDIRECT);
+        } catch (e) {
+            testStatus = 5
+        }
 
-        await t.expect(StatusPage.paymentStatusLabel.innerText).eql(MESSAGES.SUCCESS.PAYMENT_REDIRECT);
+        await updateTesCaseStatus({"testCaseName" : "REDIRECTION_TEST", "status": testStatus})
     })
 

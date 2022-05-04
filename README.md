@@ -16,6 +16,14 @@ To run this project on your own machine, follow the steps below:
 
 2. Download all dependencies:
    npm install
+3. Add this ENV vars
+   export TESTRAIL_ENABLE=true
+   export TESTRAIL_HOST=https://discovery.testrail.io/
+   export TESTRAIL_USER=youruser@discovery.com
+   export TESTRAIL_PASS=*****
+   export PROJECT_NAME="Discovery Payments Simulator"
+   export TESTRAIL_ENABLE=true
 
-3. Run all test cases with the following command:
+
+4. Run all test cases with the following command:
    npm run payments
