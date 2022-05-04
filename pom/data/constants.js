@@ -11,6 +11,9 @@ export const CARDS = {
     },
     INVALID:{
         WRONG_EXP_DATE:'0222',
+        WRONG_EXP_DATE_1: '0225',
+        OLD_EXP_DATE : '1010',
+        FUTURE_EXP_DATE: '1053',
         WRONG_CVV : '123' 
     }
 }
@@ -18,7 +21,10 @@ export const CARDS = {
 export const MESSAGES = {
     ERROR: {
         CVC_DECLINED: '24:CVC Declined',
-        EXPIRED_CARD: '6:Expired Card'
+        REFUSED: '2:Refused',
+        EXPIRED_CARD: '6:Expired Card',
+        OLD_EXPIRY_DATE: 'Card too old',
+        FUTURE_EXPIRY_DATE: 'Date too far in future'
     },
     SUCCESS: {
         PAYMENT_STATUS: 'ACTIVE',

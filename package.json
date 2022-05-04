@@ -4,7 +4,7 @@
   "description": "Automation test cases for payments at sonic environment",
   "main": "index.js",
   "scripts": {
-    "payments": "testcafe chrome pom/tests/payments.test.js --reporter html:tests-reports/payments-test-results.html"
+    "payments": "testcafe chrome pom/tests/payments.test.js"
   },
   "keywords": [
     "QA",
