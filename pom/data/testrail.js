@@ -1,6 +1,6 @@
 import http from "http";
 
-let runId = 53841;
+let runId = 53998;
 
 export const createTestRun = () => {
 
@@ -57,7 +57,7 @@ export const executeRequest = (path, data) => {
 };
 
 export const updateTesCaseStatus = (data) => {
-    console.log("Update TestRail test case " + data.testCaseName + " with status: " + data.status)
+    console.log("Update TestRail test case " + data.testCaseId + " with status: " + data.status)
     data.runId = runId
     executeRequest("/simulator/updateTesCaseStatus", data).then(r => true)
 

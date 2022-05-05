@@ -69,3 +69,8 @@ export const SCENARIO = {
         REDIRECT_REFUSED: "refusedCardRedirect"
     }
 }
+
+export const TEST_RESULT = {
+    SUCCESS: 1,
+    FAILED: 5
+}
