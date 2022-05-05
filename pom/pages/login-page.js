@@ -3,7 +3,6 @@ import {Selector, t} from "testcafe";
 class LoginPage{
 
     constructor(){
-        //this.usernameInput = Selector("#reg-username-input");
         this.realmDropdown = Selector("#mui-component-select-realm");
         this.environmentDropdown = Selector("#mui-component-select-url");
         this.dplayseElement = Selector(".MuiListItem-root").withText("dplayse");

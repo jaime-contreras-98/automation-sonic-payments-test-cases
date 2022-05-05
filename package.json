@@ -4,7 +4,11 @@
   "description": "Automation test cases for payments at sonic environment",
   "main": "index.js",
   "scripts": {
-    "payments": "testcafe chrome pom/tests/payments.test.js"
+    "paymentsTests": "testcafe chrome pom/tests/payments.test.js",
+    "incompleteFieldsTests": "testcafe chrome pom/tests/payments.test.js --test-grep 'incomplete'",
+    "expiredTests": "testcafe chrome pom/tests/payments.test.js --test-grep 'expired'",
+    "paySuccessTests":"testcafe chrome pom/tests/payments.test.js --test-grep 'successful'",
+    "payRefusedTests":"testcafe chrome pom/tests/payments.test.js --test-grep 'refused'"
   },
   "keywords": [
     "QA",
